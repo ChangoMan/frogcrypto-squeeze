@@ -1,10 +1,10 @@
-import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
+import { useTokenContractInfo } from "~~/hooks/useTokenContractInfo";
 import { JuiceImage } from "./JuiceImage";
 import { TTokenInfo } from "~~/types/frog";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 export const JuiceSlot = ({ balance = "0", token }: { balance?: string; token: TTokenInfo }) => {
-  const { data } = useDeployedContractInfo(`FrogCrypto${token.attribute}Token` as ContractName);
+  const { data } = useTokenContractInfo(`FrogCrypto${token.attribute}Token` as ContractName);
 
   return (
     <a href={`https://abi.ninja/${data?.address}/8453?methods=balanceOf`} target="_blank">
