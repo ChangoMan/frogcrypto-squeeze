@@ -13,3 +13,18 @@ export type SqueezeReward = {
 };
 
 export type SqueezeRewardKey = keyof SqueezeReward;
+
+export type SqueezeLog = {
+  id: string;
+  frogId: bigint;
+  rarityAmount: bigint;
+  jumpAmount: bigint;
+  speedAmount: bigint;
+  intelligenceAmount: bigint;
+  beautyAmount: bigint;
+  totalAmount: bigint;
+  name: string;
+  story: string;
+  timestamp: number;
+  ownerId: string;
+};
