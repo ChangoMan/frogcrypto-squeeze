@@ -3,24 +3,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { gql, request } from "graphql-request";
 import type { NextPage } from "next";
-import { JuiceImage } from "~~/components/JuiceImage";
-import { Address } from "~~/components/scaffold-eth";
-import scaffoldConfig from "~~/scaffold.config";
-
-type SqueezeLog = {
-  id: string;
-  frogId: bigint;
-  rarityAmount: bigint;
-  jumpAmount: bigint;
-  speedAmount: bigint;
-  intelligenceAmount: bigint;
-  beautyAmount: bigint;
-  totalAmount: bigint;
-  name: string;
-  story: string;
-  timestamp: number;
-  ownerId: string;
-};
+import { SqueezeLogItem } from "~~/components/SqueezeLogItem";
+import { SqueezeLog } from "~~/types/frog";
 
 type SqueezeLogs = { squeezeLogs: { items: SqueezeLog[] } };
 
@@ -76,29 +60,7 @@ const Newsfeed: NextPage = () => {
         {squeezeLogsData && squeezeLogsData.squeezeLogs.items.length && (
           <div className="space-y-6 divide-y divide-gray-300">
             {squeezeLogsData.squeezeLogs.items.map((log: SqueezeLog) => (
-              <article key={log.id} className="pt-6 flex max-w-xl flex-col items-start justify-between">
-                <div className="flex items-center gap-x-4 text-xs">
-                  <time dateTime={new Date(log.timestamp * 1000).toLocaleString()} className="text-gray-500">
-                    {new Date(log.timestamp * 1000).toLocaleString()}
-                  </time>
-                </div>
-                <div className="group relative">
-                  <div className="flex flex-col flex-wrap justify-between sm:flex-row sm:items-center">
-                    <h3 className="mt-3 mb-2 text-xl font-lindenHill tracking-wide text-gray-900">{log.name}</h3>
-                    <Address address={log.ownerId} size="sm" />
-                  </div>
-                  <p className="mt-1 line-clamp-3 text-sm/6 text-gray-600">{log.story}</p>
-                </div>
-                <p className="m-0 text-sm/6">Rewards:</p>
-                <div className="mt-1 flex flex-wrap gap-3 text-gray-600 text-sm/6">
-                  {scaffoldConfig.tokens.map(token => (
-                    <span key={token.attribute} className="flex items-center gap-1 text-xs">
-                      <JuiceImage className="w-5 h-5" name={token.name} symbol={token.symbol} />
-                      {log[`${token.attribute.toLowerCase()}Amount` as keyof SqueezeLog]}
-                    </span>
-                  ))}
-                </div>
-              </article>
+              <SqueezeLogItem key={log.id} {...log} />
             ))}
           </div>
         )}
